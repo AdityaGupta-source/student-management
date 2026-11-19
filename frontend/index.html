@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">SP</div>
+      <div>
+        <h1>Student Profiles</h1>
+        <p>Skill Development Management System</p>
+      </div>
+    </div>
+    <span id="status" class="status">Connecting...</span>
+  </header>
+
+  <main>
+    <nav class="tabs" id="tabs">
+      <button data-tab="all" class="active">All Students</button>
+      <button data-tab="merit">Merit List</button>
+      <button data-tab="add">+ Add Student</button>
+      <button data-tab="docs">API Docs</button>
+    </nav>
+
+    <!-- Summary cards (All Students tab) -->
+    <section id="statsView" class="stats">
+      <div class="stat"><span class="stat-label">Total students</span><strong id="statTotal">-</strong></div>
+      <div class="stat"><span class="stat-label">Class average</span><strong id="statAverage">-</strong></div>
+      <div class="stat"><span class="stat-label">Top performer</span><strong id="statTop">-</strong></div>
+    </section>
+
+    <!-- Search bar (All Students tab) -->
+    <section id="searchBar" class="card search">
+      <input id="searchValue" type="text" placeholder="Search by student ID, e.g. S101, then press Enter">
+      <button id="searchBtn">Search</button>
+      <button id="resetBtn" class="secondary">Show all</button>
+    </section>
+
+    <section id="listView" class="card">
+      <div class="card-head">
+        <h2 id="listTitle">All Students</h2>
+        <span id="listCount" class="count"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th id="rankHead" class="hidden">Rank</th>
+              <th data-sort="studentName" class="sortable">Student</th>
+              <th data-sort="courseName" class="sortable">Course</th>
+              <th data-sort="programmingScore" class="sortable">Programming</th>
+              <th data-sort="mathematicsScore" class="sortable">Mathematics</th>
+              <th data-sort="average" class="sortable">Average</th>
+              <th>Skills</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="studentRows"></tbody>
+        </table>
+      </div>
+      <p id="emptyText" class="empty hidden">No students to show.</p>
+    </section>
+
+    <section id="addView" class="card hidden">
+      <div class="card-head"><h2>Add a student</h2></div>
+      <form id="addForm" class="form-grid">
+        <label>Student ID <input name="studentId" required placeholder="S111"></label>
+        <label>Full name <input name="studentName" required placeholder="Neha Joshi"></label>
+        <label>Email <input name="email" type="email" required placeholder="neha@college.edu"></label>
+        <label>Course <input name="courseName" required placeholder="B.Tech CSE"></label>
+        <label>Programming score (0-100) <input name="programmingScore" type="number" min="0" max="100" step="any" required></label>
+        <label>Mathematics score (0-100) <input name="mathematicsScore" type="number" min="0" max="100" step="any" required></label>
+        <label class="wide">Technical skills (comma separated) <input name="technicalSkills" placeholder="Java, SQL, Python"></label>
+        <div class="wide buttons"><button type="submit">Add student</button></div>
+      </form>
+    </section>
+
+    <section id="docsView" class="card hidden">
+      <div class="card-head"><h2>API Documentation</h2><span id="docsUrl" class="count"></span></div>
+      <div id="docsList"></div>
+    </section>
+  </main>
+
+  <!-- Update dialog: only scores and skills can be changed (Q3.4) -->
+  <dialog id="editDialog">
+    <form id="editForm" class="form-grid">
+      <h2 class="wide">Update <span id="editId"></span></h2>
+      <label>Programming score <input name="programmingScore" type="number" min="0" max="100" step="any" required></label>
+      <label>Mathematics score <input name="mathematicsScore" type="number" min="0" max="100" step="any" required></label>
+      <label class="wide">Technical skills (comma separated) <input name="technicalSkills"></label>
+      <div class="wide buttons">
+        <button type="submit">Save changes</button>
+        <button type="button" id="cancelEdit" class="secondary">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
